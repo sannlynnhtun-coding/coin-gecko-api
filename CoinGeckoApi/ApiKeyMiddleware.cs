@@ -1,24 +1,23 @@
 ﻿using CoinGeckoApi.Services;
 
-namespace CoinGeckoApi
+namespace CoinGeckoApi;
+
+public class ApiKeyMiddleware
 {
-    public class ApiKeyMiddleware
+    private readonly RequestDelegate _next;
+
+    public ApiKeyMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public ApiKeyMiddleware(RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context, HttpClientService httpClientService)
+    {
+        if (context.Request.Headers.TryGetValue("X-CG-API-KEY", out var extractedApiKey))
         {
-            _next = next;
+            httpClientService.SetApiKey(extractedApiKey);
         }
 
-        public async Task InvokeAsync(HttpContext context, HttpClientService httpClientService)
-        {
-            if (context.Request.Headers.TryGetValue("X-CG-API-KEY", out var extractedApiKey))
-            {
-                httpClientService.SetApiKey(extractedApiKey);
-            }
-
-            await _next(context);
-        }
+        await _next(context);
     }
 }
