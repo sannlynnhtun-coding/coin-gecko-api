@@ -21,6 +21,7 @@ Add your CoinGecko API key to the `appsettings.json` file:
     "ApiKey": "your-coingecko-api-key"
   }
 }
+```
 
 ## Endpoints
 
