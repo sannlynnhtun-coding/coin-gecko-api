@@ -264,9 +264,7 @@ Add your CoinGecko API key to the `appsettings.json` file:
     "exchanges": [
       {
         "id": "binance",
-        "name": "
-
-Binance"
+        "name": "Binance"
       }
       // More results...
     ],
